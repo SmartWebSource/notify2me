@@ -9,18 +9,24 @@
             </div>
             <!-- body modal -->
             <div class="modal-body">
+                @if(isSuperAdmin())
                 <div class="form-group">
-                    <label for="name" class="control-label">Name {!! validation_error($errors->first('name'),'name') !!}</label>
+                    <label for="name" class="control-label">Company {!! validation_error($errors->first('company'),'company') !!}</label>
+                    {!! Form::select('company', App\Company::getDropDownList(), null, ['class'=>'form-control select2']) !!}
+                </div>
+                @endif
+                <div class="form-group">
+                    <label for="name" class="control-label">User Name {!! validation_error($errors->first('name'),'name') !!}</label>
                     {!! Form::text('name', null, ['class'=>'form-control']) !!}
                 </div>
                 
                 <div class="form-group">
-                    <label for="email" class="control-label">Email {!! validation_error($errors->first('email'),'email') !!}</label>
+                    <label for="email" class="control-label">User Email {!! validation_error($errors->first('email'),'email') !!}</label>
                     {!! Form::email('email', null, ['class'=>'form-control']) !!}
                 </div>
                 <div class="checkbox">
                     <label>
-                        {!! Form::checkbox('activated', 1, true) !!} Active
+                        {!! Form::checkbox('active', 1, true) !!} Active
                     </label>
                 </div>
             </div>

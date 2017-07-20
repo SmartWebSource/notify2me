@@ -58,6 +58,7 @@
             
             $('input[name=email]').removeAttr('disabled');
             
+            $('select[name=company]').val('');
             $('input[name=name]').val('');
             $('input[name=email]').val('');
             $('input[name=activated]').prop( "checked", true );
@@ -78,9 +79,10 @@
                     $('input[name=email]').attr('disabled','disabled');
                     
                     $('#user-add-edit-modal .modal-title').html('Edit User: '+response.name);
+                    $('select[name=company]').val(response.company_id);
                     $('input[name=name]').val(response.name);
                     $('input[name=email]').val(response.email);
-                    $('input[name=activated]').prop( "checked", response.activated );
+                    $('input[name=active]').prop( "checked", response.active );
                     $('input[name=id]').val(response.id);
                     $("#ajaxloader").addClass('hide');
                     $('#user-add-edit-modal').modal('show');
@@ -88,7 +90,7 @@
             });
         });
         
-        $('.btnUserAddEdit').click(function(){
+        /*$('.btnUserAddEdit').click(function(){
             var action = $(this).attr('data-action');
             if(action === 'add'){
                 $('#user-add-edit-modal .modal-title').html('Add New User');
@@ -100,7 +102,7 @@
                 
             }
             $('#user-add-edit-modal').modal('show');
-        });
+        });*/
         
         $(".btnUserView").click(function(){
             $("#ajaxloader").removeClass('hide');

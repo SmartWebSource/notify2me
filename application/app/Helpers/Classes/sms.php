@@ -54,6 +54,25 @@ class SMS {
         return $response;
     }
 
+    public static function getCredit(){
+        $url = "http://app.planetgroupbd.com/api/command?username=".env('SMS_USERNAME')."&password=".env('SMS_PASSWORD')."&cmd=Credits";
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Download the given URL, and return output
+        $output = curl_exec($ch);
+
+        if ($output === false) {
+            
+        }
+
+        // Close the cURL resource, and free system resources
+        curl_close($ch);
+
+        return $output;
+    }
+
     /**
      * Description: This function will handle all kinds of curl request
      * @param $url string

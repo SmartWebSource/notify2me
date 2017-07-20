@@ -40,4 +40,20 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('users/view/{id}', 'UserController@view');
 	Route::post('users/delete', 'UserController@delete');
 	Route::any('profile', 'UserController@profile');
+
+	//company
+	Route::any('company', 'CompanyController@index');
+	Route::post('company/save', 'CompanyController@save');
+	Route::any('company/create', 'CompanyController@create');
+	Route::any('company/edit', 'CompanyController@edit');
+	Route::get('company/view/{id}', 'CompanyController@view');
+	Route::post('company/delete', 'CompanyController@delete');
+
+	//events
+	Route::any('events', 'EventController@index');
+	Route::post('events/save', 'EventController@save');
+	Route::any('events/create', 'EventController@create');
+	Route::any('events/edit', 'EventController@edit');
+	Route::get('events/view/{id}', 'EventController@view');
+	Route::post('events/delete', 'EventController@delete');
 });

@@ -49,3 +49,7 @@ function getPaginationSummery($totalData, $dataPerPage, $currentPage) {
 function toastMessage($message, $type = 'success') {
     return ['message' => $message, 'type' => $type];
 }
+
+function formatAmount($value) {
+    return number_format((float) $value, 2, '.', '');
+}

@@ -8,7 +8,7 @@
     <div class="col-md-12">
         
         <div>
-            <a href="#" class="btn btn-danger btnAddContact"><i class="fa fa-plus-o"></i> Add Contact</a>
+            <a href="#" class="btn btn-danger btnAddContact"><i class="fa fa-plus-circle"></i> Add Contact</a>
         </div>
         
         <div class="table-responsive">
@@ -78,15 +78,11 @@
                 success: function(response){
                     $('#contact-add-edit-modal .modal-title').html('Edit Contact: '+response.name);
                     $('input[name=name]').val(response.name);
+                    $('select[name=gender]').val(response.gender);
+                    $('textarea[name=phone_numbers]').val(response.contactPhones);
+                    $('textarea[name=email_addresses]').val(response.contactEmails);
                     $('textarea[name=address]').val(response.address);
-                    $('textarea[name=purpose]').val(response.purpose);
-                    $('input[name=phone_numbers]').val(response.myNumbers);
-                    //$('input[name=phone_numbers]').tagsinput('refresh');
                     $('input[name=id]').val(response.id);
-                    /*var myGroup = [{ id: 1, text: 'Test' }];
-                    console.log(myGroup);
-                    console.log(response.myGroups);
-                    $("#group").select2({data: myGroup});*/
                     
                     $("#ajaxloader").addClass('hide');
                     $('#contact-add-edit-modal').modal('show');
@@ -141,7 +137,7 @@
                         $("#ve-"+index).html('['+value+']');
                     });
                 }else{
-                   // _toastr(response.message,"top-center",response.type,false);
+                    toastMsg(response.message, response.type);
                     if(response.status === 200){
                         setTimeout(function(){
                             location.reload();

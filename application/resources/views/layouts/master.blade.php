@@ -39,7 +39,7 @@
             @endif
             <li><a href="{{url('users')}}">Users</a></li>
             <li><a href="{{url('contacts')}}">Contacts</a></li>
-            <li><a href="#">Events</a></li>
+            <li><a href="{{url('events')}}">Events</a></li>
           </ul>
           @endif
 
@@ -47,7 +47,7 @@
             @if (Auth::guest())
                 <li><a href="javascript:void(0);">Login</a></li>
             @else
-                <li><a href="#" class="dropdown-toggle">Last Login: {{session()->get('lastLogin')}}</a></li>
+                <li><a href="#" class="dropdown-toggle">SMS Credit: {{$smsCredit}}</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         {{ Auth::user()->name }} ({{ Auth::user()->role }}) <span class="caret"></span>
@@ -87,7 +87,7 @@
         </div>
       </footer>
     </div>
-    <script src="{{$themeAssets}}/jquery-1.10.2.min.js"></script>
+    <script src="{{$themeAssets}}/jquery.min.js"></script>
     <script src="{{$themeAssets}}/bootstrap.min.js"></script>
     <script src="{{$assets}}/plugins/toaster/jquery.toast.js"></script>
 

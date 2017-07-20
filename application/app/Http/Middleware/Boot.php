@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Classes\SMS;
+use Auth;
 
 class Boot
 {
@@ -17,9 +19,11 @@ class Boot
     {
         $assets = url('assets');
 
-        $themeAssets = $assets.'/superhero';
+        $themeAssets = $assets.'/themes/'.env('APP_THEME','simplex');
 
-        view()->share(['assets' => $assets, 'themeAssets' => $themeAssets]);
+        $smsCredit = SMS::getCredit();
+
+        view()->share(['assets' => $assets, 'themeAssets' => $themeAssets, 'smsCredit' => formatAmount($smsCredit)]);
 
         return $next($request);
     }

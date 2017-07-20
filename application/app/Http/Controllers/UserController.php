@@ -13,7 +13,7 @@ class UserController extends Controller {
     public function index(Request $request) {
 
         $query = User::query();
-        if ($request->user()->role != 'super-admin') {
+        if (isSuperAdmin()) {
             $query->whereCompanyId($request->user()->company_id);
         }
         $users = $query->orderBy('id', 'desc')->paginate(20);
@@ -43,6 +43,10 @@ class UserController extends Controller {
             'name' => 'required|max:255',
         ];
 
+        if(isSuperAdmin()){
+            $rules['company'] = 'required|max:255';
+        }
+
         if (empty($request->id) || $request->id == 0) {
             $rules['email'] = 'required|email|unique:users';
         }
@@ -56,16 +60,7 @@ class UserController extends Controller {
                 //let's add
                 $user = new User();
 
-                if ($request->user()->role == 'super-admin') {
-
-                    $u = User::select(DB::raw("MAX(company_id) as company_id"))->first();
-
-                    $user->company_id = $u->company_id + 1;
-                    $user->role = 'admin';
-                } else {
-                    $user->company_id = $request->user()->company_id;
-                    $user->role = 'agent';
-                }
+                $user->role = isSuperAdmin() ? 'admin' : 'agent';
 
                 $password = str_random(6);
 
@@ -80,8 +75,10 @@ class UserController extends Controller {
                 $user->updated_by = $request->user()->id;
                 $user->updated_at = Carbon::now();
             }
+
+            $user->company_id = isSuperAdmin() ? $request->company : $request->user()->company_id;
             $user->name = trim($request->name);
-            $user->activated = $request->has('activated') ? true : false;
+            $user->active = $request->has('active') ? true : false;
 
             if ($user->save()) {
 
@@ -93,6 +90,7 @@ class UserController extends Controller {
                         'toUserName' => $user->name,
                         'subject' => 'New Account at ' . config('constants.default.app_name'),
                         'body' => [
+                            'company' => $user->company->name,
                             'name' => $user->name,
                             'username' => $user->email,
                             'password' => $password
