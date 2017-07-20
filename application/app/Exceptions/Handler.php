@@ -32,7 +32,7 @@ class Handler extends ExceptionHandler
      * @return void
      */
     public function report(Exception $e)
-    {dd($e);
+    {
         parent::report($e);
     }
 
@@ -45,6 +45,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        return parent::render($request, $e);
+        if ($this->isHttpException($e)) {
+            switch ($e->getStatusCode()) {
+                // not found
+                case 404:
+                    $back_url = $request->server('HTTP_REFERER');
+                    if (!$back_url) {
+                        $back_url = url('/');
+                    }
+                    return response()->make(view('errors.404', compact('back_url')));
+                    break;
+
+                // internal error
+                case '500':
+                    return response()->make(view('errors.500'));
+                    break;
+
+                default:
+                    return $this->renderHttpException($e);
+                    break;
+            }
+        } else {
+            return parent::render($request, $e);
+        }
     }
 }

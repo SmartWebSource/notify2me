@@ -4,7 +4,7 @@
 
 @section('content')
 
-{!! Form::model(Auth::user(), ['url'=>'users/profile']) !!}
+{!! Form::model(Auth::user(), ['url'=>'profile']) !!}
 <div class="row">
     <div class="col-md-6">
         <fieldset>
@@ -41,9 +41,6 @@
     <div class="col-md-6"></div>
 </div>
 {!! Form::close() !!}
-
-
-@include('users.add-edit-modal')
 
 @endsection
 

@@ -6,9 +6,9 @@ use Illuminate\Console\Command;
 
 use App\User;
 use App\Company;
-use App\Department;
-use App\UserPhone;
-use App\UserEmail;
+use App\Contact;
+use App\ContactPhone;
+use App\ContactEmail;
 use Carbon;
 
 class GenerateDummyData extends Command
@@ -48,40 +48,43 @@ class GenerateDummyData extends Command
             //create dummy user
             $user = new User();
             $user->name = 'Mizanur Rahman';
-            $user->username = 'mizanur';
-            $user->password = bcrypt('password');
+            $user->email = 'mizanur.rahman@smartwebsource.com';
+            $user->password = bcrypt('mizanur.rahman@smartwebsource.com');
             $user->active = true;
-            $user->user_type = 'super-admin';
+            $user->role = 'super-admin';
             $user->last_login = Carbon::now();
             $user->save();
-
-            $userPhone = new UserPhone();
-            $userPhone->number = '01713123956';
-            $userPhone->save();
-
-            $userEmail = new UserEmail();
-            $userEmail->email = 'mizan3008@gmail.com';
-            $userEmail->save();
 
             //create dummy company
             $company = new Company();
             $company->name = 'Lorem Ipsum';
+            $company->created_by = $user->id;
             $company->save();
 
+            //create dummy contact
+            $contact = new Contact();
+            $contact->company_id = $company->id;
+            $contact->name = 'Roni';
+            $contact->gender = 'male';
+            $contact->created_by = $user->id;
+            $contact->save();
 
-            //create dummy company
-            $department = new Department();
-            $department->company_id = $company->id;
-            $department->title = 'IT';
-            $department->created_by = $user->id;
-            $department->save();
+            $contactPhone = new ContactPhone();
+            $contactPhone->contact_id = $contact->id;
+            $contactPhone->number = '01713123956';
+            $contactPhone->save();
+
+            $contactEmail = new ContactEmail();
+            $contactEmail->contact_id = $contact->id;
+            $contactEmail->email = 'mizanur.rahman@smartwebsource.com';
+            $contactEmail->save();
 
             //updating compay id in user table
             $user->company_id = $company->id;
-            $user->department_id = $department->id;
+            $user->created_by = $user->id;
             $user->save();
 
-            $this->info('Username: '.$user->username.' | Password: mizanur');
+            $this->info('Username: '.$user->email);
         }catch(\Exception $ex){
             $this->info($ex->getMessage());
         }

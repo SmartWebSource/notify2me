@@ -34,8 +34,11 @@
           @if (Auth::check())
           <ul class="nav navbar-nav">
             <li><a href="{{url('dashboard')}}">Dashboard</a></li>
-            <li><a href="#">Users</a></li>
-            <li><a href="#">Departments</a></li>
+            @if(Auth::user()->role == 'super-admin')
+            <li><a href="{{url('company')}}">Company</a></li>
+            @endif
+            <li><a href="{{url('users')}}">Users</a></li>
+            <li><a href="{{url('contacts')}}">Contacts</a></li>
             <li><a href="#">Events</a></li>
           </ul>
           @endif
@@ -47,7 +50,7 @@
                 <li><a href="#" class="dropdown-toggle">Last Login: {{session()->get('lastLogin')}}</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ Auth::user()->name }} ({{ Auth::user()->user_type }}) <span class="caret"></span>
+                        {{ Auth::user()->name }} ({{ Auth::user()->role }}) <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu" role="menu">

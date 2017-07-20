@@ -75,14 +75,14 @@ class AuthController extends Controller
 
         if($request->isMethod('post')){
             $rules = [
-                'username' => 'required|max:16',
+                'email' => 'email|required',
                 'password' => 'required|min:6'
             ];
             $validator = Validator::make($request->all(), $rules);
             if (!$validator->fails()) {
 
-                //we are trying to authenticate user via username
-                if (Auth::attempt(['username' => trim($request->username), 'password' => $request->password], $request->remember)) {
+                //we are trying to authenticate user via email
+                if (Auth::attempt(['email' => trim($request->email), 'password' => $request->password], $request->remember)) {
 
                     $user = Auth::user();
 
@@ -95,7 +95,7 @@ class AuthController extends Controller
 
                     return redirect()->intended('dashboard');
                 }else{
-                    session()->flash('toast', toastMessage('Incorect username or password', 'error'));
+                    session()->flash('toast', toastMessage('Incorect email or password', 'error'));
                     return view('auth.login')->withInput($request->all());
                 }
             } else {
