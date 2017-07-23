@@ -25,13 +25,13 @@
                 </div>
                 <div class="form-group">
                     <label for="phone_numbers" class="control-label">Phone Numbers {!! validation_error($errors->first('phone_numbers'),'phone_numbers') !!}</label>
-                    {!! Form::textarea('phone_numbers', null, ['class'=>'form-control','rows'=>3]) !!}
-                    <span>hints goes here...</span>
+                    {!! Form::text('phone_numbers', '', ['class'=>'form-control my-tagsinput']) !!}
+                    <small>hints goes here...</small>
                 </div>
                 <div class="form-group">
                     <label for="email_addresses" class="control-label">Email Addresses {!! validation_error($errors->first('email_addresses'),'email_addresses') !!}</label>
-                    {!! Form::textarea('email_addresses', null, ['class'=>'form-control','rows'=>3]) !!}
-                    <span>hints goes here...</span>
+                    {!! Form::text('email_addresses', '', ['class'=>'form-control my-tagsinput']) !!}
+                    <small>hints goes here...</small>
                 </div>
             </div>
             <!-- footer modal -->

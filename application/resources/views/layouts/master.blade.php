@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="{{$assets}}/plugins/toaster/jquery.toast.css">
     <link rel="stylesheet" href="{{$themeAssets}}/custom.min.css">
     <link rel="stylesheet" href="{{$assets}}/custom.css">
+
+    @yield('custom-style')
+    
   </head>
   <body>
 
@@ -82,7 +85,7 @@
             <ul class="list-unstyled">
               <li class="pull-right"><a href="#top">Back to top</a></li>
             </ul>
-            <p>Made by <a href="#" rel="nofollow">Mizanur Rahman</a></p>
+            <p>Made with <a href="#" rel="nofollow"><i style="color:red;" class="fa fa-heart-o"></i></a></p>
           </div>
         </div>
       </footer>

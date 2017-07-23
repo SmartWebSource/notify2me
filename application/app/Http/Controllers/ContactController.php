@@ -41,7 +41,7 @@ class ContactController extends Controller {
             }
         }
         
-        $contact->contactPhones = implode(';', $contactPhones);
+        $contact->contactPhones = implode(',', $contactPhones);
 
         $contactEmails = [];
         $cEmail = $contact->emails;
@@ -51,7 +51,7 @@ class ContactController extends Controller {
             }
         }
         
-        $contact->contactEmails = implode(';', $contactEmails);
+        $contact->contactEmails = implode(',', $contactEmails);
         
         return response()->json($contact);
     }
@@ -116,7 +116,7 @@ class ContactController extends Controller {
                     ContactPhone::whereContactId($contact->id)->delete();
                 }
 
-                foreach (explode(';', $request->phone_numbers) as $number) {
+                foreach (explode(',', $request->phone_numbers) as $number) {
                     if(!empty($number)){
                         $cp = new ContactPhone();
                         $cp->contact_id = $contact->id;
@@ -131,7 +131,7 @@ class ContactController extends Controller {
                     ContactEmail::whereContactId($contact->id)->delete();
                 }
 
-                foreach (explode(';', $request->email_addresses) as $email) {
+                foreach (explode(',', $request->email_addresses) as $email) {
                     if(!empty($email)){
                         $cp = new ContactEmail();
                         $cp->contact_id = $contact->id;
@@ -148,7 +148,7 @@ class ContactController extends Controller {
     }
 
     private function isContactPhoneExists($data){
-        $query = ContactPhone::whereIn('number',explode(';', $data['numbers']));
+        $query = ContactPhone::whereIn('number',explode(',', $data['numbers']));
         if(!empty($data['reference'])){
             $query->where('contact_id','!=',$data['reference']);
         }
@@ -168,7 +168,7 @@ class ContactController extends Controller {
     }
 
     private function isContactEmailExists($data){
-        $query = ContactEmail::whereIn('email',explode(';', $data['emails']));
+        $query = ContactEmail::whereIn('email',explode(',', $data['emails']));
         if(!empty($data['reference'])){
             $query->where('contact_id','!=',$data['reference']);
         }

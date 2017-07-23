@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html":"^5.2.0",
         "google/recaptcha": "^1.1",
-        "mizanur/slack-notifier": "^1.0"
+        "mizanur/slack-notifier": "^1.0",
+        "google/apiclient": "^2.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

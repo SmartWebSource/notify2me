@@ -206,7 +206,6 @@ return [
         'Carbon' =>  'Carbon\Carbon',
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
-
     ],
 
 ];

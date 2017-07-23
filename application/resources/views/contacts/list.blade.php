@@ -52,16 +52,24 @@
 
 @endsection
 
+@section('custom-style')
+<link rel="stylesheet" href="{{$assets}}/plugins/bootstrap-tagsinput/src/bootstrap-tagsinput.css">
+<style type="text/css">
+    .bootstrap-tagsinput{width: 100% !important;}
+</style>
+@endsection
+
 @section('custom-script')
 
+<script src="{{$assets}}/plugins/bootstrap-tagsinput/src/bootstrap-tagsinput.js"></script>
+
 <script>
-    $(document).ready(function(){        
+    $(document).ready(function(){
         $('.btnAddContact').click(function(){
             $('#contact-add-edit-modal .modal-title').html('Add New Contact');
             $('input[name=name]').val('');
             $('textarea[name=address]').val('');
-            $('textarea[name=purpose]').val('');
-            $('textarea[name=phone_numbers]').val('');
+            $('.my-tagsinput').tagsinput('removeAll');
             $('input[name=id]').val(0);
             
             $('#contact-add-edit-modal').modal('show');
@@ -76,11 +84,14 @@
                 type: "POST",
                 data: {id:id},
                 success: function(response){
+
+                    $('.my-tagsinput').tagsinput('removeAll');
+
                     $('#contact-add-edit-modal .modal-title').html('Edit Contact: '+response.name);
                     $('input[name=name]').val(response.name);
                     $('select[name=gender]').val(response.gender);
-                    $('textarea[name=phone_numbers]').val(response.contactPhones);
-                    $('textarea[name=email_addresses]').val(response.contactEmails);
+                    $('input[name=phone_numbers]').tagsinput('add', response.contactPhones);
+                    $('input[name=email_addresses]').tagsinput('add', response.contactEmails);
                     $('textarea[name=address]').val(response.address);
                     $('input[name=id]').val(response.id);
                     
