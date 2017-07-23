@@ -49,11 +49,19 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('company/view/{id}', 'CompanyController@view');
 	Route::post('company/delete', 'CompanyController@delete');
 
-	//events
-	Route::any('events', 'EventController@index');
-	Route::post('events/save', 'EventController@save');
-	Route::any('events/create', 'EventController@create');
-	Route::any('events/edit', 'EventController@edit');
-	Route::get('events/view/{id}', 'EventController@view');
-	Route::post('events/delete', 'EventController@delete');
+	//meeting
+	Route::any('meeting', 'MeetingController@index');
+	Route::post('meeting/save', 'MeetingController@save');
+	Route::any('meeting/create', 'MeetingController@create');
+	Route::any('meeting/edit', 'MeetingController@edit');
+	Route::get('meeting/view/{id}', 'MeetingController@view');
+	Route::post('meeting/delete', 'MeetingController@delete');
+
+	//reminders
+	Route::any('reminders', 'ReminderController@index');
+	Route::post('reminders/save', 'ReminderController@save');
+	Route::any('reminders/create', 'ReminderController@create');
+	Route::any('reminders/edit', 'ReminderController@edit');
+	Route::get('reminders/view/{id}', 'ReminderController@view');
+	Route::post('reminders/delete', 'ReminderController@delete');
 });
