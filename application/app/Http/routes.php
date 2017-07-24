@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::any('meeting/edit', 'MeetingController@edit');
 	Route::get('meeting/view/{id}', 'MeetingController@view');
 	Route::post('meeting/delete', 'MeetingController@delete');
+	Route::get('meeting/json', 'MeetingController@meetingJson');
 
 	//reminders
 	Route::any('reminders', 'ReminderController@index');

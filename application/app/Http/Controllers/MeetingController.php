@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Meeting;
-use Validator;
+use Validator,Carbon;
+use App\MeetingAttendee;
 
 class MeetingController extends Controller
 {
     public function index(Request $request) {
 
         $query = Meeting::query();
-        if (isSuperAdmin()) {
+        if (!isSuperAdmin()) {
             $query->whereCompanyId($request->user()->company_id);
         }
         $meetings = $query->orderBy('id', 'desc')->paginate(20);
@@ -40,15 +41,12 @@ class MeetingController extends Controller
 
     public function save(Request $request) {
         $rules = [
-            'title' => 'required|max:255',
-            'next_meeting_date' => 'required|max:255',
-            'concern_person_name' => 'required|max:255',
-            'concern_person_phone' => 'required|max:255',
-            'concern_person_designation' => 'required|max:255',
+            'title' => 'required',
+            'next_meeting_date' => 'required',
+            'concern_person_name' => 'required',
             'meeting_details' => 'required',
             'attendee' => 'required'
         ];
-
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -56,51 +54,67 @@ class MeetingController extends Controller
         } else {
             if (empty($request->id) || $request->id == 0) {
                 //let's add
-                $user = new User();
-
-                $user->role = isSuperAdmin() ? 'admin' : 'agent';
-
-                $password = str_random(6);
-
-                $user->email = trim($request->email);
-                $user->password = bcrypt($password);
-                $user->remember_token = str_random(10);
-                $user->created_by = $request->user()->id;
-                $user->created_at = Carbon::now();
+                $meeting = new Meeting();
+                $meeting->created_by = $request->user()->id;
+                $meeting->created_at = Carbon::now();
+                
             } else {
                 //let's edit
-                $user = Meeting::find($request->id);
-                $user->updated_by = $request->user()->id;
-                $user->updated_at = Carbon::now();
+                $meeting = Meeting::find($request->id);
+                $meeting->updated_by = $request->user()->id;
+                $meeting->updated_at = Carbon::now();
             }
 
-            $user->company_id = isSuperAdmin() ? $request->company : $request->user()->company_id;
-            $user->name = trim($request->name);
-            $user->active = $request->has('active') ? true : false;
+            $meeting->title = trim($request->title);
+            $meeting->details = $request->meeting_details;
+            $meeting->next_meeting_date = $request->next_meeting_date;
+            $meeting->concern_person_name = trim($request->concern_person_name);
+            $meeting->concern_person_phone = trim($request->concern_person_phone);
+            $meeting->concern_person_designation = trim($request->concern_person_designation);
 
-            if ($user->save()) {
+            if ($meeting->save()) {
 
-                if (empty($request->id) || $request->id == 0) {
-                    //this is a new user registration, let's send access over email
-                    $data = [
-                        'blade' => 'new-account',
-                        'toUser' => $user->email,
-                        'toUserName' => $user->name,
-                        'subject' => 'New Account at ' . config('constants.default.app_name'),
-                        'body' => [
-                            'company' => $user->company->name,
-                            'name' => $user->name,
-                            'username' => $user->email,
-                            'password' => $password
-                        ]
-                    ];
-                    \Helpers\Classes\EmailSender::send($data);
+                $meetingAttendee = MeetingAttendee::whereMeetingId($meeting->id)->get();
+                if($meetingAttendee){
+                    MeetingAttendee::whereMeetingId($meeting->id)->delete();
                 }
 
-                return response()->json(['status' => 200, 'type' => 'success', 'message' => 'User has been successfully saved.']);
+                foreach ($request->attendee as $attendee) {
+                    if(!empty($attendee)){
+                        $ma = new MeetingAttendee();
+                        $ma->meeting_id = $meeting->id;
+                        $ma->contact_id = $attendee;
+                        $ma->save();
+                    }
+                }
+
+                return response()->json(['status' => 200, 'type' => 'success', 'message' => 'Meeting has been successfully saved.']);
             } else {
-                return response()->json(['status' => 404, 'type' => 'error', 'message' => 'User has not successfully saved.']);
+                return response()->json(['status' => 404, 'type' => 'error', 'message' => 'Meeting has not successfully saved.']);
             }
         }
+    }
+
+    public function meetingJson(){
+        $query = Meeting::query();
+        if (!isSuperAdmin()) {
+            $query->whereCompanyId($request->user()->company_id);
+        }
+        $meetings = $query->get(['id','title', 'details','next_meeting_date']);
+
+        $calendarData = [];
+
+        $i = 0;
+        foreach ($meetings as $metting) {
+            $calendarData[$i]['id'] = $metting->id;
+            $calendarData[$i]['title'] = $metting->title;
+            $calendarData[$i]['details'] = $metting->details;
+            $calendarData[$i]['start'] = $metting->next_meeting_date;
+            //$calendarData[$i]['end'] = $metting->next_meeting_date;
+            $calendarData[$i]['allDay'] = true;
+            $i++;
+        }
+
+        return response()->json($calendarData);
     }
 }

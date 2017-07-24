@@ -17,4 +17,13 @@ class Contact extends Model
     public function attendees(){
     	return $this->hasMany(MettingAttendee::class);
     }
+
+    public static function getDropDownList(){
+    	$query = Contact::query();
+        if (!isSuperAdmin()) {
+            $query->whereCompanyId(Auth::user()->company_id);
+        }
+        $contacts = $query->lists('name', 'id');
+        return $contacts;
+    }
 }

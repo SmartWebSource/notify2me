@@ -12,11 +12,9 @@ $(document).ready(function(){
         $("input[name=hdnResource]").val($(this).attr('data-id'));        
         $("#global-alert-modal").modal('show');
     });
-    
-    //$(".select2").select2();
- 
-    /*$(".datetimepicker").datetimepicker({
-        format: 'Y-MM-DD hh:mm A'
+
+    /*$('.modal').modal({
+        backdrop: 'static'
     });*/
     
 });

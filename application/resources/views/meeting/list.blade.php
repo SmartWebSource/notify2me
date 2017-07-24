@@ -26,8 +26,8 @@
                         <td>
                             {!! $meeting->title !!}
                         </td>
-                        <td width='10%'>{!! Carbon::parse($meeting->next_meeting_date)->format('d M, Y') !!}</td>
-                        <td width='15%' class="text-center">
+                        <td width='15%'>{!! Carbon::parse($meeting->next_meeting_date)->format('d M, Y') !!}</td>
+                        <td width='10%' class="text-center">
                             <a href="#" class="btn btn-default btn-xs" title="View Meeting"><i class="fa fa-eye white"></i></a>
                             <a href="javascript:void(0);" data-id="{{$meeting->id}}" class="btn btn-success btn-xs btnEditMeeting" title="Edit Meeting"><i class="fa fa-edit white"></i></a>
                             <a href="#" data-id="{{$meeting->id}}" data-action="Meetings/delete" data-message="Are you sure, You want to delete this Meeting?" class="btn btn-danger btn-xs alert-dialog" title="Delete Meeting"><i class="fa fa-trash white"></i></a>
@@ -53,18 +53,38 @@
 @endsection
 
 @section('custom-style')
-
+<link rel="stylesheet" href="{{$assets}}/plugins/select2/dist/css/select2.min.css">
+<link rel="stylesheet" href="{{$assets}}/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="{{$assets}}/plugins/summernote/summernote.css">
 @endsection
 
 @section('custom-script')
 
+<script src="{{$assets}}/plugins/select2/dist/js/select2.min.js"></script>
+<script src="{{$assets}}/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="{{$assets}}/plugins/summernote/summernote.min.js"></script>
 
 <script>
     $(document).ready(function(){
+
+        $('.select2').select2();
+        $('.datepicker').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+        });
+
+        $('textarea[name=meeting_details]').summernote({
+            height: 200
+        });
+
         $('.btnAddMeeting').click(function(){
             $('#meeting-add-edit-modal .modal-title').html('Add New Meeting');
-            $('input[name=name]').val('');
-            $('textarea[name=address]').val('');
+            $('input[name=title]').val('');
+            $('input[name=next_meeting_date]').val('');
+            $('input[name=concern_person_name]').val('');
+            $('input[name=concern_person_phone]').val('');
+            $('input[name=concern_person_designation]').val('');
+            $('textarea[name=meeting_details]').summernote('code', '');
             $('input[name=id]').val(0);
             
             $('#meeting-add-edit-modal').modal('show');
@@ -75,17 +95,28 @@
             $(".validation-error").text('*');
             $("#ajaxloader").removeClass('hide');
             $.ajax({
-                url: "{{ url('Meetings/edit') }}",
+                url: "{{ url('meeting/edit') }}",
                 type: "POST",
                 data: {id:id},
                 success: function(response){
 
-                    $('.my-tagsinput').tagsinput('removeAll');
+                    $('#meeting-add-edit-modal .modal-title').html('Edit Meeting: '+response.title);
+                    $('input[name=title]').val(response.title);
+                    $('input[name=next_meeting_date]').val(response.next_meeting_date);
+                    $('input[name=concern_person_name]').val(response.concern_person_name);
+                    $('input[name=concern_person_phone]').val(response.concern_person_phone);
+                    $('input[name=concern_person_designation]').val(response.concern_person_designation);
+                    
+                    //$('textarea[name=meeting_details]').val(response.details);
+                    $('textarea[name=meeting_details]').summernote('code', response.details);
 
-                    $('#meeting-add-edit-modal .modal-title').html('Edit Meeting: '+response.name);
-                    $('input[name=name]').val(response.name);
-                    $('select[name=gender]').val(response.gender);
-                    $('textarea[name=address]').val(response.address);
+                    var d = [{ id: 3, text: 'Apu' }];
+
+                    $('#attendee').select2({
+                      data: d
+                    });
+
+
                     $('input[name=id]').val(response.id);
                     
                     $("#ajaxloader").addClass('hide');
@@ -138,7 +169,7 @@
                 if(response.status === 400){
                     //validation error
                     $.each(response.error, function(index, value) {
-                        $("#ve-"+index).html('['+value+']');
+                        $("#ve-"+index).html('[This field is required.]');
                     });
                 }else{
                     toastMsg(response.message, response.type);
