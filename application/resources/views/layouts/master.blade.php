@@ -26,7 +26,7 @@
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../" class="navbar-brand">{{env('APP_NAME')}}</a>
+          <a href="{{url('dashboard')}}" class="navbar-brand">{{env('APP_NAME')}}</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -43,14 +43,14 @@
             <li><a href="{{url('users')}}">Users</a></li>
             <li><a href="{{url('contacts')}}">Contacts</a></li>
             <li><a href="{{url('meeting')}}">Meeting</a></li>
+            <li><a href="{{url('reminders')}}">Reminders</a></li>
           </ul>
           @endif
 
           <ul class="nav navbar-nav navbar-right">
-            @if (Auth::guest())
-                <li><a href="javascript:void(0);">Login</a></li>
-            @else
-                <li><a href="#" class="dropdown-toggle">SMS Credit: {{$smsCredit}}</a></li>
+            @if (Auth::check())
+                <!--<li><a href="#" class="dropdown-toggle">SMS Credit: {{$smsCredit}}</a></li>-->
+                <li><a href="#" class="dropdown-toggle">Last Login: {{session()->get('lastLogin')}}</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         {{ Auth::user()->name }} ({{ Auth::user()->role }}) <span class="caret"></span>

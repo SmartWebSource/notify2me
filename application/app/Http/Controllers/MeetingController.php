@@ -95,7 +95,7 @@ class MeetingController extends Controller
         }
     }
 
-    public function meetingJson(){
+    public function meetingJson(Request $request){
         $query = Meeting::query();
         if (!isSuperAdmin()) {
             $query->whereCompanyId($request->user()->company_id);

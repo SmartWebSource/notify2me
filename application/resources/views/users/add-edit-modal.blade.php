@@ -16,7 +16,7 @@
                 </div>
                 @endif
                 <div class="form-group">
-                    <label for="name" class="control-label">User Name {!! validation_error($errors->first('name'),'name') !!}</label>
+                    <label for="name" class="control-label">Name {!! validation_error($errors->first('name'),'name') !!}</label>
                     {!! Form::text('name', null, ['class'=>'form-control']) !!}
                 </div>
                 

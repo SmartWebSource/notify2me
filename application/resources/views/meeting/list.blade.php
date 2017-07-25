@@ -16,8 +16,8 @@
                 <thead>
                     <tr>
                         <th>Company Name</th>
-                        <th>Date of Next Meet</th>
-                        <th>Actions</th>
+                        <th width='15%'>Date of Next Meet</th>
+                        <th width='10%' class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,9 +28,9 @@
                         </td>
                         <td width='15%'>{!! Carbon::parse($meeting->next_meeting_date)->format('d M, Y') !!}</td>
                         <td width='10%' class="text-center">
-                            <a href="#" class="btn btn-default btn-xs" title="View Meeting"><i class="fa fa-eye white"></i></a>
+                            <a href="#" class="btn btn-default btn-xs hide" title="View Meeting"><i class="fa fa-eye white"></i></a>
                             <a href="javascript:void(0);" data-id="{{$meeting->id}}" class="btn btn-success btn-xs btnEditMeeting" title="Edit Meeting"><i class="fa fa-edit white"></i></a>
-                            <a href="#" data-id="{{$meeting->id}}" data-action="Meetings/delete" data-message="Are you sure, You want to delete this Meeting?" class="btn btn-danger btn-xs alert-dialog" title="Delete Meeting"><i class="fa fa-trash white"></i></a>
+                            <a href="#" data-id="{{$meeting->id}}" data-action="Meetings/delete" data-message="Are you sure, You want to delete this Meeting?" class="btn btn-danger btn-xs alert-dialog hide" title="Delete Meeting"><i class="fa fa-trash white"></i></a>
                         </td>
                     </tr>
                     @empty

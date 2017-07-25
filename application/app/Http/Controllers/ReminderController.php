@@ -5,31 +5,33 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Reminder;
+use Validator, Carbon;
 
 class ReminderController extends Controller
 {
     public function index(Request $request) {
 
-        $query = User::query();
-        if (isSuperAdmin()) {
+        $query = Reminder::query();
+        if (!isSuperAdmin()) {
             $query->whereCompanyId($request->user()->company_id);
         }
-        $users = $query->orderBy('id', 'desc')->paginate(20);
-        $users->paginationSummery = getPaginationSummery($users->total(), $users->perPage(), $users->currentPage());
-        return view('users.list', compact('users'));
+        $reminders = $query->orderBy('id', 'desc')->paginate(20);
+        $reminders->paginationSummery = getPaginationSummery($reminders->total(), $reminders->perPage(), $reminders->currentPage());
+        return view('reminders.list', compact('reminders'));
     }
 
     public function create(Request $request) {
-        return view('users.create');
+        return view('reminders.create');
     }
 
     public function edit(Request $request) {
-        $user = User::whereId($request->id)->first();
-        return response()->json($user);
+        $reminder = Reminder::whereId($request->id)->first();
+        return response()->json($reminder);
     }
 
     public function view($id) {
-        return view('users.view');
+        return view('reminders.view');
     }
 
     public function delete(Request $request) {
@@ -38,17 +40,10 @@ class ReminderController extends Controller
 
     public function save(Request $request) {
         $rules = [
-            'name' => 'required|max:255',
+            'meeting' => 'required',
+            'timezone' => 'required',
+            'remind_at' => 'required'
         ];
-
-        if(isSuperAdmin()){
-            $rules['company'] = 'required|max:255';
-        }
-
-        if (empty($request->id) || $request->id == 0) {
-            $rules['email'] = 'required|email|unique:users';
-        }
-
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -56,50 +51,26 @@ class ReminderController extends Controller
         } else {
             if (empty($request->id) || $request->id == 0) {
                 //let's add
-                $user = new User();
-
-                $user->role = isSuperAdmin() ? 'admin' : 'agent';
-
-                $password = str_random(6);
-
-                $user->email = trim($request->email);
-                $user->password = bcrypt($password);
-                $user->remember_token = str_random(10);
-                $user->created_by = $request->user()->id;
-                $user->created_at = Carbon::now();
+                $reminder = new Reminder();
+                $reminder->created_at = Carbon::now();
             } else {
                 //let's edit
-                $user = User::find($request->id);
-                $user->updated_by = $request->user()->id;
-                $user->updated_at = Carbon::now();
+                $reminder = Reminder::find($request->id);
+                $reminder->updated_at = Carbon::now();
             }
 
-            $user->company_id = isSuperAdmin() ? $request->company : $request->user()->company_id;
-            $user->name = trim($request->name);
-            $user->active = $request->has('active') ? true : false;
+            $reminder->company_id = $request->user()->company_id;
+            $reminder->meeting_id = $request->meeting;
+            $reminder->timezone = $request->timezone;
+            $reminder->trigger_at = Carbon::parse($request->remind_at)->format('Y-m-d h:i:s');
+            $reminder->email_payload = $request->has('remind_via_email') ? 'true' : '';
+            $reminder->sms_payload = $request->has('remind_via_sms') ? 'true' : '';
 
-            if ($user->save()) {
+            if ($reminder->save()) {
 
-                if (empty($request->id) || $request->id == 0) {
-                    //this is a new user registration, let's send access over email
-                    $data = [
-                        'blade' => 'new-account',
-                        'toUser' => $user->email,
-                        'toUserName' => $user->name,
-                        'subject' => 'New Account at ' . config('constants.default.app_name'),
-                        'body' => [
-                            'company' => $user->company->name,
-                            'name' => $user->name,
-                            'username' => $user->email,
-                            'password' => $password
-                        ]
-                    ];
-                    \Helpers\Classes\EmailSender::send($data);
-                }
-
-                return response()->json(['status' => 200, 'type' => 'success', 'message' => 'User has been successfully saved.']);
+                return response()->json(['status' => 200, 'type' => 'success', 'message' => 'Reminder has been successfully set.']);
             } else {
-                return response()->json(['status' => 404, 'type' => 'error', 'message' => 'User has not successfully saved.']);
+                return response()->json(['status' => 404, 'type' => 'error', 'message' => 'Reminder has not successfully set.']);
             }
         }
     }

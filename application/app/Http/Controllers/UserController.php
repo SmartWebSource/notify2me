@@ -13,7 +13,7 @@ class UserController extends Controller {
     public function index(Request $request) {
 
         $query = User::query();
-        if (isSuperAdmin()) {
+        if (!isSuperAdmin()) {
             $query->whereCompanyId($request->user()->company_id);
         }
         $users = $query->orderBy('id', 'desc')->paginate(20);

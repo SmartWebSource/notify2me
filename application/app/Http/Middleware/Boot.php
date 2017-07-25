@@ -21,7 +21,7 @@ class Boot
 
         $themeAssets = $assets.'/themes/'.env('APP_THEME','simplex');
 
-        $smsCredit = SMS::getCredit();
+        $smsCredit = 0;//SMS::getCredit();
 
         view()->share(['assets' => $assets, 'themeAssets' => $themeAssets, 'smsCredit' => formatAmount($smsCredit)]);
 

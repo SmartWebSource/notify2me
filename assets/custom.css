@@ -20,7 +20,7 @@
     /*centers the loading animation horizontally one the screen /*/
     top: 50%; 
     /*centers the loading animation vertically one the screen /*/
-    background-image: url(../images/ajax-loader-large.gif);
+    background-image: url(../assets/images/ajax-loader-large.gif);
     /*path to your loading animation /*/
     background-repeat: no-repeat;
     background-position: center;

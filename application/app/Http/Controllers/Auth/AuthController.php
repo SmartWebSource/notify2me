@@ -86,6 +86,13 @@ class AuthController extends Controller
 
                     $user = Auth::user();
 
+                    if(!$user->active){
+                        Auth::logout();
+                        $request->session()->flush();
+                        $request->session()->flash('toast', toastMessage('Your account is not active, please contact with your administrator.', 'error'));
+                        return view('auth.login')->withInput($request->all());
+                    }
+
                     session()->put([
                         'lastLogin' => Carbon::parse($user->last_login)->format('d M, Y @ h:i:s A')
                     ]);

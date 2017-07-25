@@ -24,7 +24,7 @@
                     <tr id='user_{{$user->id}}'>
                         <td>{!! $user->name !!}</td>
                         <td width='10%'>{!! Carbon::parse($user->created_at)->format('d M, Y') !!}</td>
-                        <td width='15%' class="text-center">
+                        <td width='10%' class="text-center">
                             <a href="#" class="btn btn-default btn-xs hide" title="View contact"><i class="fa fa-eye white"></i></a>
                             <a href="javascript:void(0);" data-id="{{$user->id}}" class="btn btn-success btn-xs btnEditUser" title="Edit contact"><i class="fa fa-edit white"></i></a>
                             <a href="#" data-id="{{$user->id}}" data-action="users/delete" data-message="Are you sure, You want to delete this contact?" class="btn btn-danger btn-xs alert-dialog hide" title="Delete User"><i class="fa fa-trash white"></i></a>

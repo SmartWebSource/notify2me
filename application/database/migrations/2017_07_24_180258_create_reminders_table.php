@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Schema\Blueprint;
@@ -14,6 +15,14 @@ class CreateRemindersTable extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('company_id');
+            $table->integer('meeting_id');
+            $table->string('timezone');
+            $table->timestamp('trigger_at');
+            $table->longtext('email_payload')->nullable();
+            $table->longtext('sms_payload')->nullable();
+            $table->string('status')->default('pending');
+            $table->string('status_message')->nullable();
             $table->timestamps();
         });
     }

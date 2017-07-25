@@ -1,6 +1,6 @@
-<div id="contact-add-edit-modal" class="modal fade">
+<div id="reminder-add-edit-modal" class="modal fade">
     <div class="modal-dialog modal-md">
-        {!! Form::open(['id'=>'contactAddEditForm']) !!}
+        {!! Form::open(['id'=>'reminderAddEditForm']) !!}
         <div class="modal-content">
             <!-- header modal -->
             <div class="modal-header">
@@ -9,29 +9,29 @@
             </div>
             <!-- body modal -->
             <div class="modal-body">
+                <div class="form-group">
+                    <label for="meeting" class="control-label">Meeting {!! validation_error($errors->first('meeting'),'meeting') !!}</label>
+                    {!! Form::select('meeting', App\Meeting::getDropDownList(), null, ['class'=>'form-control select2']) !!}
+                </div>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="name" class="control-label">Name {!! validation_error($errors->first('name'),'name') !!}</label>
-                            {!! Form::text('name', null, ['class'=>'form-control']) !!}
+                            <label for="timezone" class="control-label">Timezone {!! validation_error($errors->first('timezone'),'timezone') !!}</label>
+                            {!! Form::select('timezone', get_timezones(), env('APP_TIMEZONE'), ['class'=>'form-control select2']) !!}
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="gender" class="control-label">Gender</label>
-                            {!! Form::select('gender', ['male'=>'Male','female'=>'Female'], null, ['class'=>'form-control']) !!}
+                            <label for="remind_at" class="control-label">Remind At {!! validation_error($errors->first('remind_at'),'remind_at') !!}</label>
+                            {!! Form::text('remind_at', Carbon::now()->format('Y-m-d h:i A'), ['class'=>'form-control datetimepicker']) !!}
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="phone_numbers" class="control-label">Phone Numbers {!! validation_error($errors->first('phone_numbers'),'phone_numbers') !!}</label>
-                    {!! Form::text('phone_numbers', '', ['class'=>'form-control my-tagsinput']) !!}
-                    <small>hints goes here...</small>
+                <div class="checkbox">
+                    <label>{!! Form::checkbox('remind_via_email', 'email', true) !!} Remind via email</label>
                 </div>
-                <div class="form-group">
-                    <label for="email_addresses" class="control-label">Email Addresses {!! validation_error($errors->first('email_addresses'),'email_addresses') !!}</label>
-                    {!! Form::text('email_addresses', '', ['class'=>'form-control my-tagsinput']) !!}
-                    <small>hints goes here...</small>
+                <div class="checkbox hide">
+                    <label>{!! Form::checkbox('remind_via_sms', 'email', false) !!} Remind via sms</label>
                 </div>
             </div>
             <!-- footer modal -->
