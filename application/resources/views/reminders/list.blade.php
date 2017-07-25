@@ -27,7 +27,7 @@
                     <tr id='reminder_{{$reminder->id}}'>
                         <td>{!! $reminder->meeting->title !!}</td>
                         <td>{{$reminder->trigger_at}} ({{$reminder->timezone}})</td>
-                        <td>{!! $reminder->status !!}</td>
+                        <td>{!! $reminder->email_status !!}</td>
                         <td width='10%'>{!! $reminder->created_at->format('d M, Y') !!}</td>
                         <td width='10%' class="text-center">
                             <a href="#" class="btn btn-default btn-xs hide" title="View Reminder"><i class="fa fa-eye white"></i></a>

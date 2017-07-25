@@ -10,7 +10,7 @@ class Meeting extends Model
     protected $table = 'meeting';
 
     public function attendees(){
-    	return $this->hasMany(MettingAttendee::class);
+    	return $this->hasMany(MeetingAttendee::class);
     }
 
     public function reminders(){

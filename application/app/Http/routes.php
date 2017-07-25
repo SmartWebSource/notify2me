@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/home', function () {
+    return redirect('dashboard');
+});
+
 Route::get('/', function () {
     return view('auth.login');
 });

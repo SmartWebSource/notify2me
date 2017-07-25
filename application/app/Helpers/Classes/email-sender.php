@@ -24,7 +24,8 @@ class EmailSender {
             });
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+            dd($e);
             return false;
         }
     }

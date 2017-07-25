@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MeetingAttendee extends Model
 {
-    protected $timestamps = false;
+    public $timestamps = false;
 
     public function meeting(){
     	return $this->belongsTo(Meeting::class);

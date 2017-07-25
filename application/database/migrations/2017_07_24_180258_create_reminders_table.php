@@ -18,7 +18,7 @@ class CreateRemindersTable extends Migration
             $table->integer('company_id');
             $table->integer('meeting_id');
             $table->string('timezone');
-            $table->timestamp('trigger_at');
+            $table->timestamp('trigger_at')->nullable();
             $table->longtext('email_payload')->nullable();
             $table->longtext('sms_payload')->nullable();
             $table->string('status')->default('pending');

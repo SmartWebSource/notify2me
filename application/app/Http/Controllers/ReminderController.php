@@ -62,7 +62,7 @@ class ReminderController extends Controller
             $reminder->company_id = $request->user()->company_id;
             $reminder->meeting_id = $request->meeting;
             $reminder->timezone = $request->timezone;
-            $reminder->trigger_at = Carbon::parse($request->remind_at)->format('Y-m-d h:i:s');
+            $reminder->trigger_at = Carbon::parse($request->remind_at)->format('Y-m-d H:i:s');
             $reminder->email_payload = $request->has('remind_via_email') ? 'true' : '';
             $reminder->sms_payload = $request->has('remind_via_sms') ? 'true' : '';
 
