@@ -49,31 +49,37 @@ class SendNotifications extends Command
             $q->where('email_status','!=','success')->orWhere('sms_status','!=','success');
         });
 
+        error_log($query->toSql());
+
         $reminders = $query->get();
 
-        foreach ($reminders as $reminder) {
-
-            $currentTime = Carbon::now($reminder->timezone);
-            $triggerTime = Carbon::parse($reminder->trigger_at);
-
-            if($reminder->email_status == 'failed'){
-                $reminder->remindViaEmail();
-            }else{
-
-                if($currentTime->gte($triggerTime)){
+        if(count($reminders) > 0){
+            foreach ($reminders as $reminder) {
+    
+                $currentTime = Carbon::now($reminder->timezone);
+                $triggerTime = Carbon::parse($reminder->trigger_at);
+    
+                if($reminder->email_status == 'failed'){
                     $reminder->remindViaEmail();
+                }else{
+    
+                    if($currentTime->gte($triggerTime)){
+                        $reminder->remindViaEmail();
+                    }
                 }
+    
+                /*if($reminder->sms_status == 'failed'){
+                    $reminder->remindViaSMS();
+                }else{
+                    if($currentTime->gte($triggerTime)){
+                        $reminder->remindViaSMS();
+                    }   
+                }*/
             }
 
-            /*if($reminder->sms_status == 'failed'){
-                $reminder->remindViaSMS();
-            }else{
-                if($currentTime->gte($triggerTime)){
-                    $reminder->remindViaSMS();
-                }   
-            }*/
+            $this->info('200');
+        }else{
+            $this->info('nothing found');
         }
-
-        $this->info('200');
     }
 }

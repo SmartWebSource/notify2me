@@ -27,8 +27,15 @@ class MeetingController extends Controller
     }
 
     public function edit(Request $request) {
-        $user = Meeting::whereId($request->id)->first();
-        return response()->json($user);
+        $meeting = Meeting::whereId($request->id)->first();
+
+        $myAttendees = [];
+        foreach ($meeting->attendees as $attendee) {
+            $myAttendees[] = $attendee->contact->id;
+        }
+        $meeting->myAttendees = json_encode($myAttendees);
+
+        return response()->json($meeting);
     }
 
     public function view($id) {

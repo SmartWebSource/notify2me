@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-group">
                     <label for="attendee" class="control-label">Attendee {!! validation_error($errors->first('attendee'),'attendee') !!}</label>
-                    {!! Form::select('attendee[]', App\Contact::getDropDownList(), null, ['id'=>'attendee','class'=>'form-control select2','multiple']) !!}
+                    {!! Form::select('attendee[]', App\Contact::getDropDownList(), null, ['id'=>'attendee','class'=>'form-control chosen-select','multiple']) !!}
                 </div>
             </div>
             <!-- footer modal -->

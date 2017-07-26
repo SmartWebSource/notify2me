@@ -56,6 +56,9 @@
 <link rel="stylesheet" href="{{$assets}}/plugins/select2/dist/css/select2.min.css">
 <link rel="stylesheet" href="{{$assets}}/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="{{$assets}}/plugins/summernote/summernote.css">
+
+<link rel="stylesheet" href="https://harvesthq.github.io/chosen/chosen.css">
+
 @endsection
 
 @section('custom-script')
@@ -64,10 +67,13 @@
 <script src="{{$assets}}/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script src="{{$assets}}/plugins/summernote/summernote.min.js"></script>
 
+<script src="https://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+
 <script>
     $(document).ready(function(){
 
         $('.select2').select2();
+        $(".chosen-select").chosen({width: "95%"});
         $('.datepicker').datepicker({
             autoclose: true,
             format: 'yyyy-mm-dd'
@@ -107,15 +113,13 @@
                     $('input[name=concern_person_phone]').val(response.concern_person_phone);
                     $('input[name=concern_person_designation]').val(response.concern_person_designation);
                     
-                    //$('textarea[name=meeting_details]').val(response.details);
                     $('textarea[name=meeting_details]').summernote('code', response.details);
 
-                    var d = [{ id: 3, text: 'Apu' }];
-
-                    $('#attendee').select2({
-                      data: d
+                    var myAttendees = $.parseJSON(response.myAttendees);
+                    $.each(myAttendees, function( index, value ){
+                       $('#attendee').find('option[value="'+ value +'"]').attr('Selected', 'Selected');
+                       $("#attendee").trigger('chosen:updated');   
                     });
-
 
                     $('input[name=id]').val(response.id);
                     
