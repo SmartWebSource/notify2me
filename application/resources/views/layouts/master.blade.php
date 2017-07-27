@@ -78,7 +78,7 @@
         <div class="row">
           <div class="col-lg-12">
             <ul class="list-unstyled">
-              <li class="pull-right"><a href="#top">Back to top</a></li>
+              <li class="pull-right">Copyright &copy; {{Carbon::now()->format('Y')}} by {!!env('APP_COPYRIGHT_NAME')!!}</li>
             </ul>
             <p>Made with <a href="#" rel="nofollow"><i style="color:red;" class="fa fa-heart-o"></i></a> | <small>{{app_build_info()}}</small></p>
           </div>
