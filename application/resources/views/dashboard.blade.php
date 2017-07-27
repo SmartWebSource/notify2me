@@ -42,9 +42,9 @@
                 events: response,
                 eventColor: 'red',
                 eventClick: function(event, jsEvent, view) {
-                    console.log(event);
+                    /*console.log(event);
                     console.log(jsEvent);
-                    console.log(view);
+                    console.log(view);*/
                     /*var date=new Date(event.end._i);
                     var end_date=new Date(date.setDate(date.getDate()-1));
                     $('#holiday_reason').val(event.title);

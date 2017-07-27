@@ -116,7 +116,7 @@ class MeetingController extends Controller
             $calendarData[$i]['id'] = $metting->id;
             $calendarData[$i]['title'] = $metting->title;
             $calendarData[$i]['details'] = $metting->details;
-            $calendarData[$i]['start'] = $metting->next_meeting_date;
+            $calendarData[$i]['start'] = Carbon::parse($metting->next_meeting_date)->format('Y-m-d');
             //$calendarData[$i]['end'] = $metting->next_meeting_date;
             $calendarData[$i]['allDay'] = true;
             $i++;
