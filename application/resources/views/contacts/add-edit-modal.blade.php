@@ -26,12 +26,12 @@
                 <div class="form-group">
                     <label for="phone_numbers" class="control-label">Phone Numbers {!! validation_error($errors->first('phone_numbers'),'phone_numbers') !!}</label>
                     {!! Form::text('phone_numbers', '', ['class'=>'form-control my-tagsinput']) !!}
-                    <small>hints goes here...</small>
+                    <small>i.e 8801xxxxxxxxx, 8801xxxxxxxxx</small>
                 </div>
                 <div class="form-group">
                     <label for="email_addresses" class="control-label">Email Addresses {!! validation_error($errors->first('email_addresses'),'email_addresses') !!}</label>
                     {!! Form::text('email_addresses', '', ['class'=>'form-control my-tagsinput']) !!}
-                    <small>hints goes here...</small>
+                    <small>i.e abc@example.com, def@example.com</small>
                 </div>
             </div>
             <!-- footer modal -->
@@ -39,7 +39,7 @@
                 {!! validationHints() !!}
                 {!!Form::hidden('id')!!}
                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success">Save <i class="fa fa-spinner spinner hide"></i></button>
+                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
             </div>
         </div>
         {!! Form::close() !!}

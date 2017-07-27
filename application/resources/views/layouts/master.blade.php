@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{$themeAssets}}/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="{{$assets}}/plugins/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{$assets}}/plugins/toaster/jquery.toast.css">
+    <link rel="stylesheet" href="{{$assets}}/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="{{$assets}}/plugins/chosen/chosen.css">
     <link rel="stylesheet" href="{{$themeAssets}}/custom.min.css">
     <link rel="stylesheet" href="{{$assets}}/custom.css">
 
@@ -69,13 +71,6 @@
 
 
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="page-header">
-            <h1 id="navbar">@yield('page-header')</h1>
-          </div>
-        </div>
-      </div>
 
       @yield('content')
 
@@ -85,7 +80,7 @@
             <ul class="list-unstyled">
               <li class="pull-right"><a href="#top">Back to top</a></li>
             </ul>
-            <p>Made with <a href="#" rel="nofollow"><i style="color:red;" class="fa fa-heart-o"></i></a></p>
+            <p>Made with <a href="#" rel="nofollow"><i style="color:red;" class="fa fa-heart-o"></i></a> | <small>{{app_build_info()}}</small></p>
           </div>
         </div>
       </footer>
@@ -93,6 +88,8 @@
     <script src="{{$themeAssets}}/jquery.min.js"></script>
     <script src="{{$themeAssets}}/bootstrap.min.js"></script>
     <script src="{{$assets}}/plugins/toaster/jquery.toast.js"></script>
+    <script src="{{$assets}}/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{$assets}}/plugins/chosen/chosen.jquery.min.js"></script>
 
     <!-- Theme's Custom Script-->
     <script src="{{$themeAssets}}/custom.js"></script>

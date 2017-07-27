@@ -1,10 +1,9 @@
 @extends('layouts.master')
 
-@section('page-header') Profile @endsection
-
 @section('content')
 
 {!! Form::model(Auth::user(), ['url'=>'profile']) !!}
+<br>
 <div class="row">
     <div class="col-md-6">
         <fieldset>
@@ -24,13 +23,19 @@
             <p class="validation-error-hints"><i class="fa fa-info-circle"></i> If you do not want to change your password, just leave password fields blank.</p>
             
             <div id="change-password">
-                <div class="form-group">
-                    <label for="password" class="control-label">Password {!! validation_error($errors->first('password'),'password', true) !!}</label>
-                    {!! Form::password('password', ['class'=>'form-control']) !!}
-                </div>
-                <div class="form-group">
-                    <label for="password_confirmation" class="control-label">Confirm Password {!! validation_error($errors->first('password_confirmation'),'password_confirmation', true) !!}</label>
-                    {!! Form::password('password_confirmation', ['class'=>'form-control']) !!}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password" class="control-label">Password {!! validation_error($errors->first('password'),'password', true) !!}</label>
+                            {!! Form::password('password', ['class'=>'form-control']) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password_confirmation" class="control-label">Confirm Password {!! validation_error($errors->first('password_confirmation'),'password_confirmation', true) !!}</label>
+                            {!! Form::password('password_confirmation', ['class'=>'form-control']) !!}
+                        </div>
+                    </div>
                 </div>
             </div>
             

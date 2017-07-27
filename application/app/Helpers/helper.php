@@ -114,3 +114,28 @@ function pretty_timezone_name($name)
     );
     return $name;
 }
+
+/**
+* Description: This function will return app build info
+* @return string App Build Info
+*/
+function app_build_info(){
+    $build_path = base_path('build.json');
+    if (file_exists($build_path)) {
+        $file_handle = fopen($build_path, "r");
+        $build_info_data = fread($file_handle, filesize($build_path));
+        fclose($file_handle);
+        $build_info = json_decode($build_info_data, true);
+        if(is_array ( $build_info )){
+            $output = "";
+            if( array_key_exists('build_number', $build_info) && array_key_exists('build_date', $build_info) ){
+                $output .=  "v".$build_info["build_number"].".".$build_info["build_date"];
+            }
+            if( array_key_exists('build_branch', $build_info) ){
+                $output .= " | Branch: ".$build_info["build_branch"];
+            }
+                
+            return $output;
+        }
+    }
+}

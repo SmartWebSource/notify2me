@@ -18,7 +18,7 @@ class Meeting extends Model
     }
 
     public function getNextMeetingDateAttribute($value){
-        return Carbon::parse($value)->format('Y-m-d');
+        return Carbon::parse($value)->format('Y-m-d h:i A');
     }
 
     public static function getDropDownList(){

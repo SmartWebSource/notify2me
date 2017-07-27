@@ -13,6 +13,15 @@ $(document).ready(function(){
         $("#global-alert-modal").modal('show');
     });
 
+    $(".chosen-select").chosen({width: "100%"});
+
+    $('.datetimepicker').datetimepicker({
+        format: "yyyy-mm-dd HH:ii P",
+        showMeridian: true,
+        autoclose: true,
+        todayHighlight: true
+    });
+
     /*$('.modal').modal({
         backdrop: 'static'
     });*/

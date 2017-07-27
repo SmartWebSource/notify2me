@@ -16,7 +16,7 @@ class ReminderController extends Controller
         if (!isSuperAdmin()) {
             $query->whereCompanyId($request->user()->company_id);
         }
-        $reminders = $query->orderBy('id', 'desc')->paginate(20);
+        $reminders = $query->orderBy('id', 'desc')->paginate(25);
         $reminders->paginationSummery = getPaginationSummery($reminders->total(), $reminders->perPage(), $reminders->currentPage());
         return view('reminders.list', compact('reminders'));
     }

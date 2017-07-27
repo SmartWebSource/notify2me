@@ -1,16 +1,18 @@
 @extends('layouts.master')
 
-@section('page-header') Reminder List @endsection
-
 @section('content')
 
 <div class="row">
-    <div class="col-md-12">
-        
-        <div>
+    <div class="my-page-header">
+        <div class="col-md-8"><h4>Reminder List</h4></div>
+        <div class="col-md-4">
             <a href="#" class="btn btn-danger btnAddReminder"><i class="fa fa-plus-circle"></i> Add Reminder</a>
         </div>
-        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">        
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -26,7 +28,7 @@
                     @forelse($reminders as $reminder)
                     <tr id='reminder_{{$reminder->id}}'>
                         <td>{!! $reminder->meeting->title !!}</td>
-                        <td>{{$reminder->trigger_at}} ({{$reminder->timezone}})</td>
+                        <td>{{Carbon::parse($reminder->trigger_at)->format('d M, Y @ h:i A')}} ({{$reminder->timezone}})</td>
                         <td>{!! $reminder->email_status !!}</td>
                         <td width='10%'>{!! $reminder->created_at->format('d M, Y') !!}</td>
                         <td width='10%' class="text-center">
@@ -41,13 +43,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
-            <div class="col-sm-4">{{$reminders->paginationSummery}}</div>
-            <div class="col-sm-8 text-right">
-                {!! $reminders->links() !!}
-            </div>
-        </div>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">{{$reminders->paginationSummery}}</div>
+    <div class="col-sm-8 text-right">{!! $reminders->links() !!}</div>
 </div>
 
 @include('reminders.add-edit-modal')
@@ -55,20 +56,14 @@
 @endsection
 
 @section('custom-style')
-<link rel="stylesheet" href="{{$assets}}/plugins/select2/dist/css/select2.min.css">
-<link rel="stylesheet" href="{{$assets}}/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+
 @endsection
 
 @section('custom-script')
 
-<script src="{{$assets}}/plugins/select2/dist/js/select2.min.js"></script>
-
-<script src="{{$assets}}/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
 <script>
     $(document).ready(function(){
-
-        //$('.select2').select2();
 
         $('.datetimepicker').datetimepicker({
             format: "yyyy-mm-dd HH:ii P",

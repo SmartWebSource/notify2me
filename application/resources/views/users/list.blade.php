@@ -5,11 +5,16 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-12">        
-        <div>
+    <div class="my-page-header">
+        <div class="col-md-8"><h4>User List</h4></div>
+        <div class="col-md-4">
             <a href="#" class="btn btn-danger btnAddUser"><i class="fa fa-plus-circle"></i> Add User</a>
         </div>
-        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">        
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -36,13 +41,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
-                <div class="col-sm-4">{{$users->paginationSummery}}</div>
-                <div class="col-sm-8 text-right">
-                    {!! $users->links() !!}
-                </div>
-            </div>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">{{$users->paginationSummery}}</div>
+    <div class="col-sm-8 text-right">{!! $users->links() !!}</div>
 </div>
 
 @include('users.add-edit-modal')

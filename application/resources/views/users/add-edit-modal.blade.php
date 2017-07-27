@@ -12,7 +12,7 @@
                 @if(isSuperAdmin())
                 <div class="form-group">
                     <label for="name" class="control-label">Company {!! validation_error($errors->first('company'),'company') !!}</label>
-                    {!! Form::select('company', App\Company::getDropDownList(), null, ['class'=>'form-control select2']) !!}
+                    {!! Form::select('company', App\Company::getDropDownList(), null, ['class'=>'form-control']) !!}
                 </div>
                 @endif
                 <div class="form-group">
@@ -35,7 +35,7 @@
                 {!! validationHints() !!}
                 {!!Form::hidden('id')!!}
                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success">Save <i class="fa fa-spinner spinner hide"></i></button>
+                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
             </div>
         </div>
         {!! Form::close() !!}

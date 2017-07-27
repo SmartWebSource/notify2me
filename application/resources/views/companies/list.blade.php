@@ -1,15 +1,18 @@
 @extends('layouts.master')
 
-@section('page-header') Company List @endsection
-
 @section('content')
 
 <div class="row">
-    <div class="col-md-12">        
-        <div>
+    <div class="my-page-header">
+        <div class="col-md-8"><h4>Company List</h4></div>
+        <div class="col-md-4">
             <a href="#" class="btn btn-danger btnAddCompany"><i class="fa fa-plus-circle"></i> Add Company</a>
         </div>
-        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">        
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -36,13 +39,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
-                <div class="col-sm-4">{{$companies->paginationSummery}}</div>
-                <div class="col-sm-8 text-right">
-                    {!! $companies->links() !!}
-                </div>
-            </div>
     </div>
+</div>
+<div class="row">
+    <div class="col-sm-4">{{$companies->paginationSummery}}</div>
+    <div class="col-sm-8 text-right">{!! $companies->links() !!}</div>
 </div>
 
 @include('companies.add-edit-modal')

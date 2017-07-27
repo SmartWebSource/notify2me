@@ -1,32 +1,34 @@
 @extends('layouts.master')
 
-@section('page-header') Meeting List @endsection
-
 @section('content')
 
 <div class="row">
-    <div class="col-md-12">
-        
-        <div>
+    <div class="my-page-header">
+        <div class="col-md-8"><h4>Meeting List</h4></div>
+        <div class="col-md-4">
             <a href="#" class="btn btn-danger btnAddMeeting"><i class="fa fa-plus-circle"></i> Add Meeting</a>
         </div>
-        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">        
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Company Name</th>
+                        <th>Company Name / Meeting Title</th>
                         <th width='15%'>Date of Next Meet</th>
+                        <th width='10%'>Created at</th>
                         <th width='10%' class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($meetings as $meeting)
                     <tr id='meeting_{{$meeting->id}}'>
-                        <td>
-                            {!! $meeting->title !!}
-                        </td>
-                        <td width='15%'>{!! Carbon::parse($meeting->next_meeting_date)->format('d M, Y') !!}</td>
+                        <td>{!! $meeting->title !!}</td>
+                        <td width='15%'>{!! Carbon::parse($meeting->next_meeting_date)->format('d M, Y @ h:i A') !!}</td>
+                        <td width='10%'>{!! $meeting->created_at->format('d M, Y') !!}</td>
                         <td width='10%' class="text-center">
                             <a href="#" class="btn btn-default btn-xs hide" title="View Meeting"><i class="fa fa-eye white"></i></a>
                             <a href="javascript:void(0);" data-id="{{$meeting->id}}" class="btn btn-success btn-xs btnEditMeeting" title="Edit Meeting"><i class="fa fa-edit white"></i></a>
@@ -39,13 +41,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
-            <div class="col-sm-4">{{$meetings->paginationSummery}}</div>
-            <div class="col-sm-8 text-right">
-                {!! $meetings->links() !!}
-            </div>
-        </div>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">{{$meetings->paginationSummery}}</div>
+    <div class="col-sm-8 text-right">{!! $meetings->links() !!}</div>
 </div>
 
 @include('meeting.add-edit-modal')
@@ -53,49 +54,36 @@
 @endsection
 
 @section('custom-style')
-<link rel="stylesheet" href="{{$assets}}/plugins/select2/dist/css/select2.min.css">
-<link rel="stylesheet" href="{{$assets}}/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="{{$assets}}/plugins/summernote/summernote.css">
-
-<link rel="stylesheet" href="https://harvesthq.github.io/chosen/chosen.css">
 
 @endsection
 
 @section('custom-script')
-
-<script src="{{$assets}}/plugins/select2/dist/js/select2.min.js"></script>
-<script src="{{$assets}}/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script src="{{$assets}}/plugins/summernote/summernote.min.js"></script>
-
-<script src="https://harvesthq.github.io/chosen/chosen.jquery.js"></script>
 
 <script>
     $(document).ready(function(){
 
-        $('.select2').select2();
-        $(".chosen-select").chosen({width: "95%"});
-        $('.datepicker').datepicker({
-            autoclose: true,
-            format: 'yyyy-mm-dd'
-        });
-
-        $('textarea[name=meeting_details]').summernote({
-            height: 200
-        });
-
-        $('.btnAddMeeting').click(function(){
-            $('#meeting-add-edit-modal .modal-title').html('Add New Meeting');
+        $('#meeting-add-edit-modal').on('hidden.bs.modal', function () {
             $('input[name=title]').val('');
             $('input[name=next_meeting_date]').val('');
             $('input[name=concern_person_name]').val('');
             $('input[name=concern_person_phone]').val('');
             $('input[name=concern_person_designation]').val('');
             $('textarea[name=meeting_details]').summernote('code', '');
+            $('#attendee').val('').trigger('chosen:updated');
             $('input[name=id]').val(0);
-            
+        });
+
+        $('textarea[name=meeting_details]').summernote({
+            height: 150
+        });
+
+        $('.btnAddMeeting').click(function(){
+            $('#meeting-add-edit-modal .modal-title').html('Add New Meeting');
             $('#meeting-add-edit-modal').modal('show');
         });
-        
+
         $('.btnEditMeeting').click(function(){
             var id = $(this).attr('data-id');
             $(".validation-error").text('*');
@@ -116,10 +104,7 @@
                     $('textarea[name=meeting_details]').summernote('code', response.details);
 
                     var myAttendees = $.parseJSON(response.myAttendees);
-                    $.each(myAttendees, function( index, value ){
-                       $('#attendee').find('option[value="'+ value +'"]').attr('Selected', 'Selected');
-                       $("#attendee").trigger('chosen:updated');   
-                    });
+                    $('#attendee').val(myAttendees).trigger('chosen:updated');
 
                     $('input[name=id]').val(response.id);
                     
@@ -127,20 +112,6 @@
                     $('#meeting-add-edit-modal').modal('show');
                 }
             });
-        });
-        
-        $('.btnMeetingAddEdit').click(function(){
-            var action = $(this).attr('data-action');
-            if(action === 'add'){
-                $('#meeting-add-edit-modal .modal-title').html('Add New Meeting');
-                $('input[name=title]').val('');
-                $('select[name=parent]').val('');
-                $('textarea[name=details]').val('');
-                $('input[name=id]').val(0);
-            }else{
-                
-            }
-            $('#meeting-add-edit-modal').modal('show');
         });
         
         $(".btnMeetingView").click(function(){
@@ -187,7 +158,6 @@
                 $("#ajaxloader").addClass('hide');
             }
         });
-    }
-    
+    }    
 </script>
 @endsection

@@ -1,9 +1,16 @@
 @extends('layouts.master')
 
-@section('page-header') Reset Password @endsection
-
 <!-- Main Content -->
 @section('content')
+
+    <div class="row">
+        <div class="my-page-header">
+            <div class="col-md-12"><h4>Reset Password</h4></div>
+        </div>
+    </div>
+
+    <hr>
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             @if (session('status'))
@@ -33,6 +40,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-btn fa-envelope"></i> Send Password Reset Link
                         </button>
+                        <a class="btn btn-link" href="/login">Back to login</a>
                     </div>
                 </div>
             {!! Form::close() !!}

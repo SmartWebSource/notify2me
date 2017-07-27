@@ -1,8 +1,15 @@
 @extends('layouts.master')
 
-@section('page-header') Dashboard @endsection
-
 @section('content')
+
+    <div class="row">
+        <div class="my-page-header">
+            <div class="col-md-12"><h4>Dashboard</h4></div>
+        </div>
+    </div>
+
+    <hr>
+
     <div class="row">
         <div class="col-md-12">
             <div id="calendar"></div>

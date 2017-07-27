@@ -19,7 +19,7 @@ class ContactController extends Controller {
         if ($request->user()->role != 'super-admin') {
             $query->whereCompanyId($request->user()->company_id);
         }
-        $contacts = $query->orderBy('id', 'desc')->paginate(20);
+        $contacts = $query->orderBy('id', 'desc')->paginate(25);
         $contacts->paginationSummery = getPaginationSummery($contacts->total(), $contacts->perPage(), $contacts->currentPage());
         return view('contacts.list', compact('contacts'));
     }

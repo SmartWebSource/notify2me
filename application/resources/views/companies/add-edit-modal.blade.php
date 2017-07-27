@@ -29,7 +29,7 @@
                 {!! validationHints() !!}
                 {!!Form::hidden('id')!!}
                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success">Save <i class="fa fa-spinner spinner hide"></i></button>
+                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
             </div>
         </div>
         {!! Form::close() !!}

@@ -17,7 +17,7 @@ class MeetingController extends Controller
         if (!isSuperAdmin()) {
             $query->whereCompanyId($request->user()->company_id);
         }
-        $meetings = $query->orderBy('id', 'desc')->paginate(20);
+        $meetings = $query->orderBy('id', 'desc')->paginate(25);
         $meetings->paginationSummery = getPaginationSummery($meetings->total(), $meetings->perPage(), $meetings->currentPage());
         return view('meeting.list', compact('meetings'));
     }
@@ -74,7 +74,7 @@ class MeetingController extends Controller
 
             $meeting->title = trim($request->title);
             $meeting->details = $request->meeting_details;
-            $meeting->next_meeting_date = $request->next_meeting_date;
+            $meeting->next_meeting_date = Carbon::parse($request->next_meeting_date)->format('Y-m-d H:i:s');
             $meeting->concern_person_name = trim($request->concern_person_name);
             $meeting->concern_person_phone = trim($request->concern_person_phone);
             $meeting->concern_person_designation = trim($request->concern_person_designation);

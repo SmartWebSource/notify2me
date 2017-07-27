@@ -1,16 +1,18 @@
 @extends('layouts.master')
 
-@section('page-header') Contact List @endsection
-
 @section('content')
 
 <div class="row">
-    <div class="col-md-12">
-        
-        <div>
+    <div class="my-page-header">
+        <div class="col-md-8"><h4>Contact List</h4></div>
+        <div class="col-md-4">
             <a href="#" class="btn btn-danger btnAddContact"><i class="fa fa-plus-circle"></i> Add Contact</a>
         </div>
-        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">        
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -39,13 +41,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
-                <div class="col-sm-4">{{$contacts->paginationSummery}}</div>
-                <div class="col-sm-8 text-right">
-                    {!! $contacts->links() !!}
-                </div>
-            </div>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">{{$contacts->paginationSummery}}</div>
+    <div class="col-sm-8 text-right">{!! $contacts->links() !!}</div>
 </div>
 
 @include('contacts.add-edit-modal')

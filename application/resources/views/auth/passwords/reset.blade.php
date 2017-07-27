@@ -1,8 +1,15 @@
 @extends('layouts.master')
 
-@section('page-header') Reset Password @endsection
-
 @section('content')
+
+    <div class="row">
+        <div class="my-page-header">
+            <div class="col-md-12"><h4>Reset Password</h4></div>
+        </div>
+    </div>
+
+    <hr>
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             {!! Form::open(['url'=>'/password/reset', 'class'=>'form-horizontal']) !!}
@@ -55,6 +62,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-btn fa-refresh"></i> Reset Password
                         </button>
+                        <a class="btn btn-link" href="/login">Back to login</a>
                     </div>
                 </div>
             {!! Form::close() !!}

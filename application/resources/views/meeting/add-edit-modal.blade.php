@@ -12,14 +12,14 @@
             <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label for="title" class="control-label">Company Name {!! validation_error($errors->first('title'),'title') !!}</label>
+                            <label for="title" class="control-label">Company Name / Meeting Title {!! validation_error($errors->first('title'),'title') !!}</label>
                             {!! Form::text('title', null, ['class'=>'form-control','maxlength'=>250]) !!}
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="next_meeting_date" class="control-label">Next Meeting Date {!! validation_error($errors->first('next_meeting_date'),'next_meeting_date') !!}</label>
-                            {!! Form::text('next_meeting_date', null, ['class'=>'form-control datepicker']) !!}
+                            <label for="next_meeting_date" class="control-label">Next Meeting {!! validation_error($errors->first('next_meeting_date'),'next_meeting_date') !!}</label>
+                            {!! Form::text('next_meeting_date', null, ['class'=>'form-control datetimepicker']) !!}
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-group">
                     <label for="attendee" class="control-label">Attendee {!! validation_error($errors->first('attendee'),'attendee') !!}</label>
-                    {!! Form::select('attendee[]', App\Contact::getDropDownList(), null, ['id'=>'attendee','class'=>'form-control chosen-select','multiple']) !!}
+                    {!! Form::select('attendee[]', App\Contact::getDropDownList(), null, ['id'=>'attendee','class'=>'form-control chosen-select','multiple','data-placeholder'=>'Choose Attendees']) !!}
                 </div>
             </div>
             <!-- footer modal -->
@@ -57,7 +57,7 @@
                 {!! validationHints() !!}
                 {!!Form::hidden('id')!!}
                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success">Save <i class="fa fa-spinner spinner hide"></i></button>
+                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
             </div>
         </div>
         {!! Form::close() !!}

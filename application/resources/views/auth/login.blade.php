@@ -1,8 +1,15 @@
 @extends('layouts.master')
 
-@section('page-header') Login @endsection
-
 @section('content')
+
+<div class="row">
+    <div class="my-page-header">
+        <div class="col-md-12"><h4>Login</h4></div>
+    </div>
+</div>
+
+<hr>
+
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         {!! Form::open(['url'=>'/login', 'class'=>'form-horizontal']) !!}

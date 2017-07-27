@@ -11,13 +11,13 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="meeting" class="control-label">Meeting {!! validation_error($errors->first('meeting'),'meeting') !!}</label>
-                    {!! Form::select('meeting', App\Meeting::getDropDownList(), null, ['class'=>'form-control select2']) !!}
+                    {!! Form::select('meeting', App\Meeting::getDropDownList(), null, ['class'=>'form-control']) !!}
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="timezone" class="control-label">Timezone {!! validation_error($errors->first('timezone'),'timezone') !!}</label>
-                            {!! Form::select('timezone', get_timezones(), env('APP_TIMEZONE'), ['class'=>'form-control select2']) !!}
+                            {!! Form::select('timezone', get_timezones(), env('APP_TIMEZONE'), ['class'=>'form-control']) !!}
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -39,7 +39,7 @@
                 {!! validationHints() !!}
                 {!!Form::hidden('id')!!}
                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success">Save <i class="fa fa-spinner spinner hide"></i></button>
+                <button type="button" onclick="javascript:save();" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
             </div>
         </div>
         {!! Form::close() !!}

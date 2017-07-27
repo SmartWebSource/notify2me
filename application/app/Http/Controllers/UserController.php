@@ -16,7 +16,7 @@ class UserController extends Controller {
         if (!isSuperAdmin()) {
             $query->whereCompanyId($request->user()->company_id);
         }
-        $users = $query->orderBy('id', 'desc')->paginate(20);
+        $users = $query->orderBy('id', 'desc')->paginate(25);
         $users->paginationSummery = getPaginationSummery($users->total(), $users->perPage(), $users->currentPage());
         return view('users.list', compact('users'));
     }

@@ -36,5 +36,9 @@
 .select2{width: 100% !important;}
 
 .table-responsive{padding-top: 5px !important;}
-.page-header h1{font-size:2em !important;}
-.page-header{margin-top: 20px !important;}
+/*.page-header h1{font-size:2em !important;}
+.page-header{margin-top: 20px !important;}*/
+
+.my-page-header{padding-top: 25px;}
+.my-page-header a{float: right;}
+.pagination{margin:0px !important;}
