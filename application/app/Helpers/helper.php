@@ -131,7 +131,7 @@ function app_build_info(){
             if( array_key_exists('build_number', $build_info) && array_key_exists('build_date', $build_info) ){
                 $output .=  "v".$build_info["build_number"].".".$build_info["build_date"];
             }
-            if( array_key_exists('build_branch', $build_info) ){
+            if( array_key_exists('build_branch', $build_info) && !empty($build_info["build_branch"]) ){
                 $output .= " | Branch: ".$build_info["build_branch"];
             }
                 
