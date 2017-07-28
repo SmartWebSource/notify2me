@@ -18,7 +18,7 @@
                 <thead>
                     <tr>
                         <th>Event Title</th>
-                        <th width='15%'>Date of Next Meet</th>
+                        <th width='15%'>Date</th>
                         <th width='10%'>Created at</th>
                         <th width='10%' class="text-center">Actions</th>
                     </tr>

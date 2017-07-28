@@ -8,7 +8,15 @@ class Company extends Model
 {
 
     public function users(){
-    	return $this->hasMeny(User::class);
+    	return $this->hasMany(User::class);
+    }
+
+    public function contacts(){
+    	return $this->hasMany(Contact::class);
+    }
+
+    public function events(){
+    	return $this->hasMany(Event::class);
     }
 
     public static function getDropDownList(){

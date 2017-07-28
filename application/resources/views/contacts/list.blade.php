@@ -19,7 +19,7 @@
                     <tr>
                         <th>Name</th>
                         <th width="10%">Created at</th>
-                        <th width="10% class="text-center">Actions</th>
+                        <th width="10%"" class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>

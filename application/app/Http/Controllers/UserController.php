@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Validator,
-    Carbon,
-    DB;
+    Carbon;
 
 class UserController extends Controller {
 
     public function index(Request $request) {
+
+        if(isAgent()){
+            return view('errors.403');
+        }
 
         $query = User::query();
         if (!isSuperAdmin()) {

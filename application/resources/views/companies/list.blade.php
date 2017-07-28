@@ -18,7 +18,10 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Created at</th>
+                        <th width='10%' class="text-center">Total Users</th>
+                        <th width='10%' class="text-center">Total Contacts</th>
+                        <th width='10%' class="text-center">Total Events</th>
+                        <th width='10%'>Created at</th>
                         <th width='10%' class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -26,6 +29,9 @@
                     @forelse($companies as $company)
                     <tr id='user_{{$company->id}}'>
                         <td>{!! $company->name !!}</td>
+                        <td width='10%' class="text-center">{{$company->users->count()}}</td>
+                        <td width='10%' class="text-center">{{$company->contacts->count()}}</td>
+                        <td width='10%' class="text-center">{{$company->events->count()}}</td>
                         <td width='10%'>{!! Carbon::parse($company->created_at)->format('d M, Y') !!}</td>
                         <td width='10%' class="text-center">
                             <a href="#" class="btn btn-default btn-xs hide" title="View contact"><i class="fa fa-eye white"></i></a>
@@ -34,7 +40,7 @@
                         </td>
                     </tr>
                     @empty
-                    <tr><td colspan="3">No records found.</td></tr>
+                    <tr><td colspan="6">No records found.</td></tr>
                     @endforelse
                 </tbody>
             </table>

@@ -22,6 +22,8 @@ $(document).ready(function(){
         todayHighlight: true
     });
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     /*$('.modal').modal({
         backdrop: 'static'
     });*/

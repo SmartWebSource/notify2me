@@ -19,7 +19,7 @@
                     <tr>
                         <th>Event</th>
                         <th>Remind at (timezone)</th>
-                        <th>Status</th>
+                        <th width="10%" class="text-center">Status</th>
                         <th width="10%">Created at</th>
                         <th width="10%" class="text-center">Actions</th>
                     </tr>
@@ -29,7 +29,7 @@
                     <tr id='reminder_{{$reminder->id}}'>
                         <td>{!! $reminder->event->title !!}</td>
                         <td>{{Carbon::parse($reminder->trigger_at)->format('d M, Y @ h:i A')}} ({{$reminder->timezone}})</td>
-                        <td>{!! $reminder->email_status !!}</td>
+                        <td width="10%" class="text-center">{!! ucfirst($reminder->email_status )!!}</td>
                         <td width='10%'>{!! $reminder->created_at->format('d M, Y') !!}</td>
                         <td width='10%' class="text-center">
                             <a href="#" class="btn btn-default btn-xs hide" title="View Reminder"><i class="fa fa-eye white"></i></a>

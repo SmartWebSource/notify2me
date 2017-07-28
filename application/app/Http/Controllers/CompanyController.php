@@ -12,6 +12,9 @@ class CompanyController extends Controller
 {
     public function index(Request $request) {
 
+        if(!isSuperAdmin()){
+            return view('errors.403');
+        }
         $query = Company::query();
         $companies = $query->orderBy('id', 'desc')->paginate(25);
         $companies->paginationSummery = getPaginationSummery($companies->total(), $companies->perPage(), $companies->currentPage());

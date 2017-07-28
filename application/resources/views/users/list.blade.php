@@ -20,7 +20,9 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Created at</th>
+                        <th width='10%' class="text-center">Role</th>
+                        <th width='10%' class="text-center">Status</th>
+                        <th width='10%'>Created at</th>
                         <th width='10%' class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -28,6 +30,8 @@
                     @forelse($users as $user)
                     <tr id='user_{{$user->id}}'>
                         <td>{!! $user->name !!}</td>
+                        <th width='10%' class="text-center">{{$user->role}}</th>
+                        <th width='10%' class="text-center"><i data-toggle="tooltip" data-placement="top" data-original-title="User is {{$user->active ? 'active' : 'inactive'}} now" class="fa fa-{{$user->active ? 'check-circle-o' : 'ban'}}"></i></th>
                         <td width='10%'>{!! Carbon::parse($user->created_at)->format('d M, Y') !!}</td>
                         <td width='10%' class="text-center">
                             <a href="#" class="btn btn-default btn-xs hide" title="View contact"><i class="fa fa-eye white"></i></a>
@@ -36,7 +40,7 @@
                         </td>
                     </tr>
                     @empty
-                    <tr><td colspan="3">No records found.</td></tr>
+                    <tr><td colspan="5">No records found.</td></tr>
                     @endforelse
                 </tbody>
             </table>
