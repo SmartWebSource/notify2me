@@ -17,7 +17,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Company Name / Meeting Title</th>
+                        <th>Event</th>
                         <th>Remind at (timezone)</th>
                         <th>Status</th>
                         <th width="10%">Created at</th>
@@ -27,7 +27,7 @@
                 <tbody>
                     @forelse($reminders as $reminder)
                     <tr id='reminder_{{$reminder->id}}'>
-                        <td>{!! $reminder->meeting->title !!}</td>
+                        <td>{!! $reminder->event->title !!}</td>
                         <td>{{Carbon::parse($reminder->trigger_at)->format('d M, Y @ h:i A')}} ({{$reminder->timezone}})</td>
                         <td>{!! $reminder->email_status !!}</td>
                         <td width='10%'>{!! $reminder->created_at->format('d M, Y') !!}</td>
@@ -95,7 +95,7 @@
                     var remind_via_sms = response.sms_payload === '' ? false : true;
 
                     $('#reminder-add-edit-modal .modal-title').html('Edit Reminder');
-                    $('select[name=meeting]').val(response.meeting_id);
+                    $('select[name=event]').val(response.event_id);
                     $('select[name=timezone]').val(response.timezone);
                     $('input[name=remind_at]').val(response.trigger_at);
                     $( 'input[name=remind_via_email]' ).prop( 'checked', remind_via_email );

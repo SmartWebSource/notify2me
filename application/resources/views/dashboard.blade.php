@@ -30,7 +30,7 @@
 
         $("#ajaxloader").removeClass('hide');
 
-        $.get("{{url('meeting/json')}}", function(response){
+        $.get("{{url('events/json')}}", function(response){
             $('#calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
@@ -40,7 +40,7 @@
                 editable: false,
                 eventLimit: true,
                 events: response,
-                eventColor: 'red',
+                //eventColor: 'red',
                 eventClick: function(event, jsEvent, view) {
                     /*console.log(event);
                     console.log(jsEvent);

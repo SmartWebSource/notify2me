@@ -1,6 +1,6 @@
-<strong>{{$meetingTitle}}</strong>
+<strong>{{$eventTitle}}</strong>
 <br><br>
-{!! $meetingDetail !!}
+{!! $eventDetail !!}
 <br><br>
 Thank You,
 <br>

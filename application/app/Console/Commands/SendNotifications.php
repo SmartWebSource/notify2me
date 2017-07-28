@@ -49,7 +49,7 @@ class SendNotifications extends Command
             $q->where('email_status','!=','success')->orWhere('sms_status','!=','success');
         });
 
-        error_log($query->toSql());
+        //error_log($query->toSql());
 
         $reminders = $query->get();
 

@@ -16,7 +16,7 @@ class CreateRemindersTable extends Migration
         Schema::create('reminders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('company_id');
-            $table->integer('meeting_id');
+            $table->integer('event_id');
             $table->string('timezone');
             $table->timestamp('trigger_at')->nullable();
             $table->longtext('email_payload')->nullable();

@@ -1,6 +1,6 @@
-<div id="meeting-add-edit-modal" class="modal fade">
+<div id="event-add-edit-modal" class="modal fade">
     <div class="modal-dialog modal-lg">
-        {!! Form::open(['id'=>'meetingAddEditForm']) !!}
+        {!! Form::open(['id'=>'eventAddEditForm']) !!}
         <div class="modal-content">
             <!-- header modal -->
             <div class="modal-header">
@@ -10,20 +10,26 @@
             <!-- body modal -->
             <div class="modal-body">
             <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="title" class="control-label">Company Name / Meeting Title {!! validation_error($errors->first('title'),'title') !!}</label>
+                            <label for="title" class="control-label">Event Title {!! validation_error($errors->first('title'),'title') !!}</label>
                             {!! Form::text('title', null, ['class'=>'form-control','maxlength'=>250]) !!}
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="next_meeting_date" class="control-label">Next Meeting {!! validation_error($errors->first('next_meeting_date'),'next_meeting_date') !!}</label>
-                            {!! Form::text('next_meeting_date', null, ['class'=>'form-control datetimepicker']) !!}
+                            <label for="type" class="control-label">Event Type</label>
+                            {!! Form::select('type', ['personal'=>'Personal','official'=>'Official'], null, ['class'=>'form-control']) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="start_date" class="control-label">Event Date {!! validation_error($errors->first('start_date'),'start_date') !!}</label>
+                            {!! Form::text('start_date', Carbon::now()->format('Y-m-d h:i A'), ['class'=>'form-control datetimepicker']) !!}
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div id="official_event_element" class="row hide">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="concern_person_name" class="control-label">Concern Person Name {!! validation_error($errors->first('concern_person_name'),'concern_person_name') !!}</label>
@@ -43,13 +49,25 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label for="meeting_details" class="control-label">Meeting Details {!! validation_error($errors->first('meeting_details'),'meeting_details') !!}</label>
-                    {!! Form::textarea('meeting_details', null, ['class'=>'form-control']) !!}
+                    <label for="description" class="control-label">Event Description</label>
+                    {!! Form::textarea('description', null, ['class'=>'form-control']) !!}
                 </div>
-                <div class="form-group">
-                    <label for="attendee" class="control-label">Attendee {!! validation_error($errors->first('attendee'),'attendee') !!}</label>
-                    {!! Form::select('attendee[]', App\Contact::getDropDownList(), null, ['id'=>'attendee','class'=>'form-control chosen-select','multiple','data-placeholder'=>'Choose Attendees']) !!}
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="attendee" class="control-label">Event Attendee {!! validation_error($errors->first('attendee'),'attendee') !!}</label>
+                            {!! Form::select('attendee[]', App\Contact::getDropDownList(), null, ['id'=>'attendee','class'=>'form-control chosen-select','multiple','data-placeholder'=>'Choose Attendees']) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="priority" class="control-label">Event Priority</label>
+                            {!! Form::select('priority', config('constants.priority'), '', ['class'=>'form-control']) !!}
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- footer modal -->

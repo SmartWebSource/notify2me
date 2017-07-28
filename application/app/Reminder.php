@@ -8,8 +8,8 @@ use Carbon, Mail;
 
 class Reminder extends Model
 {
-    public function meeting(){
-    	return $this->belongsTo(Meeting::class);
+    public function event(){
+    	return $this->belongsTo(Event::class);
     }
 
     public function getTriggerAtAttribute($value){
@@ -21,12 +21,12 @@ class Reminder extends Model
     	$status = 0;
     	$exceptionMessage = "";
 
-    	$meeting = $this->meeting;
+    	$event = $this->event;
 
-    	$meetingTitle = $meeting->title;
-    	$meetingDetail = $meeting->details;
+    	$eventTitle = $event->title;
+    	$eventDetail = $event->description;
 
-    	$attendees = $meeting->attendees;
+    	$attendees = $event->attendees;
 
     	$attendeeArray = [];
 		$i = 0;
@@ -47,13 +47,13 @@ class Reminder extends Model
 
     		try{
     			$data = [
-	    			'meetingTitle' => $meetingTitle,
-	                'meetingDetail' => $meetingDetail
+	    			'eventTitle' => $eventTitle,
+	                'eventDetail' => $eventDetail
 	    		];
 
 	    		$status = Mail::send('emails.email-notifier', $data, function ($message) use($attendeeArray) {
 
-	    			$message->subject('Meeting Reminder');
+	    			$message->subject('Event Reminder');
 				    $message->to('asbs.reminder@gmail.com', 'ASBS');
 
 				    foreach ($attendeeArray as $attendee) {

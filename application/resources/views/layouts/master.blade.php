@@ -44,7 +44,7 @@
             @endif
             <li><a href="{{url('users')}}">Users</a></li>
             <li><a href="{{url('contacts')}}">Contacts</a></li>
-            <li><a href="{{url('meeting')}}">Meeting</a></li>
+            <li><a href="{{url('events')}}">Events</a></li>
             <li><a href="{{url('reminders')}}">Reminders</a></li>
           </ul>
           @endif

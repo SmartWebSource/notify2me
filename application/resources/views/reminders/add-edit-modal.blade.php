@@ -10,8 +10,8 @@
             <!-- body modal -->
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="meeting" class="control-label">Meeting {!! validation_error($errors->first('meeting'),'meeting') !!}</label>
-                    {!! Form::select('meeting', App\Meeting::getDropDownList(), null, ['class'=>'form-control']) !!}
+                    <label for="event" class="control-label">Event {!! validation_error($errors->first('event'),'event') !!}</label>
+                    {!! Form::select('event', App\Event::getDropDownList(), null, ['class'=>'form-control']) !!}
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -30,8 +30,8 @@
                 <div class="checkbox">
                     <label>{!! Form::checkbox('remind_via_email', 'email', true) !!} Remind via email</label>
                 </div>
-                <div class="checkbox hide">
-                    <label>{!! Form::checkbox('remind_via_sms', 'email', false) !!} Remind via sms</label>
+                <div class="checkbox">
+                    <label>{!! Form::checkbox('remind_via_sms', 'email', false, ['disabled'=>'disabled']) !!} Remind via sms (coming soon...)</label>
                 </div>
             </div>
             <!-- footer modal -->
