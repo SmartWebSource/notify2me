@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Carbon;
+use Carbon, Auth;
 
 class Event extends Model
 {

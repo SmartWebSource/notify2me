@@ -41,13 +41,15 @@ class SendNotifications extends Command
     {
         $query = Reminder::query();
 
-        $query->where(function ($q) {
+        /*$query->where(function ($q) {
             $q->where('email_payload', '!=', '')->orWhere('sms_payload', '!=', '');
         });
 
         $query->where(function($q){
             $q->where('email_status','!=','success')->orWhere('sms_status','!=','success');
-        });
+        });*/
+
+        $query->where('email_payload', '!=', '')->where('email_status','!=','success');
 
         //error_log($query->toSql());
 
